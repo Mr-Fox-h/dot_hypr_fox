@@ -37,6 +37,7 @@ post_hook = 'kill -SIGUSR1 $(pgrep btop)'
 [templates.swaync]
 input_path = '~/.config/matugen/templates/colors.css'
 output_path = '~/.config/swaync/colors.css'
+post_hook = 'kill -SIGUSR1 $(pgrep swaync); swaync & disown'
 
 # [templates.gtk]
 # input_path = '~/.config/matugen/templates/gtk-colors.css'
