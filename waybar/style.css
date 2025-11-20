@@ -1,0 +1,191 @@
+@import 'colors.css';
+
+* {
+    font-family: "MesloLGS Nerd Font Mono Bold";
+    font-size: 12px;
+    min-height: 0;
+    font-weight: bold;
+}
+
+tooltip {
+  background: @background;
+  border: 1px solid @outline_variant;
+}
+
+tooltip label {
+  color: @on_surface;
+}
+
+window#waybar {
+    background: transparent;
+    color: @on_surface;
+    transition-duration: 0.1s;
+}
+
+window#waybar.empty #window {
+    background-color: transparent;
+}
+
+#window {
+    background: @inverse_on_surface;
+    color: @on_surface;
+    margin: 8px 0 8px 0;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 50px;
+}
+
+button {
+    background: alpha(@on_surface, 0.1);
+    padding: 0 4px;
+    margin: 4px;
+    border-radius: 50px;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
+
+#workspaces {
+    background: @background;
+    border-radius: 20px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    padding: 0 4px 0 4px;
+}
+
+#workspaces button:hover {
+    background: alpha(@on_background, 0.2);
+}
+
+#workspaces button.focused {
+    background: transparent;
+    color: @surface_container_highest;
+}
+
+#workspaces button.active {
+    background: alpha(@on_surface, 0.5);
+    color: lighter(@surface_container_highest);
+    border-radius: 20px;
+    transition: color 0.3s;
+    margin-left: 3px;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-right: 3px;
+    animation: gradient_f 20s ease-in infinite;
+    transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
+
+#workspaces button.urgent {
+    color: @error;
+    background: transparent;
+}
+
+#pulseaudio,
+#clock,
+#battery,
+#cpu,
+#bluetooth,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#wireplumber,
+#tray,
+#network,
+#mode,
+#scratchpad {
+  background: @on_primary_fixed;
+  color: @on_surface;
+  margin: 8px 8px 8px 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 50px;
+}
+
+
+#language {
+  background: @secondary_fixed;
+  color: @source_color;
+  margin: 8px 8px 8px 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 50px;
+}
+
+#custom-app {
+  background: @surface_dim;
+  color: @on_background;
+  margin: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 50px;
+}
+
+#clock {
+    color: @on_error_container;
+}
+
+#clock.date {
+    color: @on_error_container;
+}
+
+#pulseaudio {
+    color: @on_primary_container;
+}
+
+#bluetooth.disable {
+  color: @error;
+}
+
+#bluetooth.off, #bluetooth.disabled {
+  color: @error;
+}
+
+#bluetooth.on {
+  color: @error_container;
+}
+
+#bluetooth.connected {
+  color: @secondary;
+}
+
+#network.disabled, #network.disconnected {
+  color: @error;
+}
+
+#network {
+    color: @secondary;
+}
+
+#network.ethernet {
+  color: @error;
+}
+
+#idle_inhibitor {
+    margin-right: 12px;
+    color: @secondary;
+}
+
+#idle_inhibitor.activated {
+    color: @error;
+}
+
+#battery {
+    color: @secondary;
+}
+
+/* If workspaces is the leftmost module, omit left margin */
+.modules-left>widget:first-child>#workspaces {
+    margin-left: 0;
+}
+
+/* If workspaces is the rightmost module, omit right margin */
+.modules-right>widget:last-child>#workspaces {
+    margin-right: 0;
+}
+
+#custom-vpn {
+    color: @outline;
+    border-radius: 15px;
+    padding-left: 6px;
+    padding-right: 6px;
+}

@@ -1,0 +1,88 @@
+{
+  "position": "top",
+  "height": 2,
+  "modules-left": ["custom/app", "hyprland/language", "hyprland/window"],
+  "modules-center": ["hyprland/workspaces"],
+  "modules-right": ["cpu", "memory", "network", "bluetooth", "pulseaudio", "battery", "clock"],
+  "custom/app": {
+    "on-click": "pkill rofi || .config/rofi/launchers/type-5/launcher.sh",
+    "format": "{icon}   App",
+    "format-icons": {
+      "default": ""
+    }
+  },
+  "hyprland/language": {
+    "format": "{short}",
+  },
+  "hyprland/window": {
+      "format": "{}",
+      "rewrite": {
+          "(.*) — Zen Browser": "    $1",
+          "Neovide": "    Neovide",
+      },
+      "separate-outputs": true
+  },
+  "hyprland/workspaces": {
+        "format": "{icon}",
+        "on-click": "activate",
+        "all-outputs": true,
+        "format-icons": {
+        "default": " ",
+        "active": " "
+		}
+	},
+  "clock": {
+    "format": "<span>   </span>{:%a %d %H:%M}",
+    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 15
+    },
+    "format": "<span size='13000' foreground='#a6e3a1'>{icon} </span> {capacity}%",
+    "format-warning": "<span size='13000' foreground='#B1E3AD'>{icon} </span> {capacity}%",
+    "format-critical": "<span size='13000' foreground='#E38C8F'>{icon} </span> {capacity}%",
+    "format-charging": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
+    "format-plugged": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
+    "format-alt": "<span size='13000' foreground='#B1E3AD'>{icon} </span> {time}",
+    "format-full": "<span size='13000' foreground='#B1E3AD'> </span>{capacity}%",
+    "format-icons": ["", "", "", "", ""],
+    "tooltip-format": "{time}"
+  },
+  "network": {
+    "format-wifi": "<span size='13000'>󰛳 </span>{essid}",
+    "format-ethernet": "<span size='13000'>󰅛 </span> Disconnected",
+    "format-linked": "{ifname} (No IP) ",
+    "format-disconnected": "<span size='13000'>󰅛 </span>Disconnected",
+    "tooltip-format-wifi": "Signal Strenght: {signalStrength}%"
+  },
+  "bluetooth": {
+    "format": "󰂯 {status}",
+    "format-disabled": "󰂲 {status}",
+    "format-connected": "󰂱 {device_alias}",
+    "format-connected-battery": "󰂱 {device_alias} {device_battery_percentage}%",
+    "format-device-preference": [ "device1", "device2" ], // preference list deciding the displayed device
+    "tooltip-format": "{controller_alias}\t{controller_address}\n\n{num_connections} connected",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{num_connections} connected\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "tooltip-format-enumerate-connected-battery": "{device_alias}\t{device_address}\t{device_battery_percentage}%"
+  },
+  "pulseaudio": {
+      "format": "{icon}  {volume}%",
+      "format-muted": "",
+      "format-icons": {
+          "default": ["", "", " "]
+      },
+      "on-click": "pavucontrol"
+  },
+  "cpu": {
+      "interval": 10,
+      "format": "{}% ",
+      "max-length": 10
+  },
+  "memory": {
+      "interval": 30,
+      "format": "{used:0.1f}G/{total:0.1f}G "
+  }
+}
