@@ -3,7 +3,7 @@
   "height": 2,
   "modules-left": ["custom/app", "hyprland/language", "hyprland/window"],
   "modules-center": ["hyprland/workspaces"],
-  "modules-right": ["cpu", "memory", "network", "bluetooth", "pulseaudio", "battery", "clock"],
+  "modules-right": ["cpu", "memory", "network", "bluetooth", "pulseaudio", "battery", "custom/notifications",  "clock"],
   "custom/app": {
     "on-click": "pkill rofi || .config/rofi/launchers/type-5/launcher.sh",
     "format": "{icon}   App",
@@ -31,6 +31,20 @@
         "active": " "
 		}
 	},
+
+  "custom/notifications": {
+    "format": "{icon}",
+    "format-icons": {
+      "default": "󰂚",  // Bell icon (no notifications)
+      "notification": "󰂞",  // Bell with dot (has notifications)
+      "dnd": "󰂛"  // Bell with slash (Do Not Disturb)
+    },
+    "tooltip": false,
+    "on-click": "swaync-client -t",
+    "on-click-right": "swaync-client -d", // Toggle DND mode
+    "escape": true
+  },
+
   "clock": {
     "format": "<span>   </span>{:%a %d %H:%M}",
     "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>"

@@ -101,7 +101,6 @@ button {
   border-radius: 50px;
 }
 
-
 #language {
   background: @secondary_fixed;
   color: @source_color;
@@ -118,6 +117,25 @@ button {
   padding-left: 15px;
   padding-right: 15px;
   border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
+
+#custom-app:hover {
+  color: @tertiary_fixed;
+}
+
+#custom-notifications {
+  background: @on_primary_fixed;
+  color: @tertiary;
+  margin: 8px 8px 8px 0;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 50px;
+  transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
+
+#custom-notifications:hover {
+  color: @tertiary_fixed;
 }
 
 #clock {
@@ -129,7 +147,12 @@ button {
 }
 
 #pulseaudio {
-    color: @on_primary_container;
+  color: @on_primary_container;
+  transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+}
+
+#pulseaudio:hover {
+  color: @tertiary_fixed;
 }
 
 #bluetooth.disable {
