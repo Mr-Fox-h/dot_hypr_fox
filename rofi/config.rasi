@@ -14,7 +14,7 @@
 * ~/.config/rofi/themes/ will be replaced. */
 
 /* ---- Global Configuration Fonts ---- */
-@import "~/.config/rofi/0-shared-fonts.rasi"
+// @import "~/.config/rofi/0-shared-fonts.rasi"
 
 /* note: Main themes in ~/.config/rofi/themes */
 /* You can manually change here or you can use rofi theme selector SUPER SHIFT E */
