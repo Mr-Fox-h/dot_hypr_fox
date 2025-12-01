@@ -29,7 +29,7 @@ window#waybar.empty #window {
 #window {
     background: @inverse_on_surface;
     color: @on_surface;
-    margin: 8px 0 8px 0;
+    margin: 8px 8px 8px 0;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 50px;
@@ -92,6 +92,7 @@ button {
 #tray,
 #network,
 #mode,
+#privacy,
 #scratchpad {
   background: @on_primary_fixed;
   color: @on_surface;

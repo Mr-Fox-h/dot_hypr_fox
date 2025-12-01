@@ -3,7 +3,7 @@
   "height": 2,
   "modules-left": ["custom/app", "hyprland/language", "hyprland/window"],
   "modules-center": ["hyprland/workspaces"],
-  "modules-right": ["cpu", "memory", "network", "bluetooth", "pulseaudio", "battery", "custom/notifications",  "clock"],
+  "modules-right": ["tray", "privacy", "cpu", "memory", "network", "bluetooth", "pulseaudio", "battery", "custom/notifications",  "clock"],
   "custom/app": {
     "on-click": "pkill rofi || .config/rofi/launchers/type-5/launcher.sh",
     "format": "{icon}   App",
@@ -12,26 +12,59 @@
     }
   },
   "hyprland/language": {
-    "format": "{short}",
+    "format": "{short}"
   },
   "hyprland/window": {
       "format": "{}",
       "rewrite": {
           "(.*) — Zen Browser": "    $1",
           "Neovide": "    Neovide",
+          "Qalculate!": "    Qalculate"
       },
       "separate-outputs": true
   },
-  "hyprland/workspaces": {
-        "format": "{icon}",
-        "on-click": "activate",
-        "all-outputs": true,
-        "format-icons": {
-        "default": " ",
-        "active": " "
+	 "hyprland/workspaces": {
+	       "format": "{icon}",
+	       "on-click": "activate",
+	       "all-outputs": true,
+	       "format-icons": {
+	         "default": " ",
+	         "active": " "
 		}
 	},
-
+  "privacy": {
+    "icon-spacing": 4,
+    "icon-size": 15,
+    "transition-duration": 250,
+    "modules": [
+      {
+        "type": "screenshare",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      },
+      {
+        "type": "audio-out",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      },
+      {
+        "type": "audio-in",
+        "tooltip": true,
+        "tooltip-icon-size": 24
+      }
+    ],
+    "ignore-monitor": true,
+    "ignore": [
+      {
+        "type": "audio-in",
+        "name": "cava"
+      },
+      {
+        "type": "screenshare",
+        "name": "obs"
+      }
+    ]
+  },
   "custom/notifications": {
     "format": "{icon}",
     "format-icons": {
@@ -89,6 +122,11 @@
           "default": ["", "", " "]
       },
       "on-click": "pavucontrol"
+  },
+  "tray": {
+    "icon-size": 15,
+    "spacing": 10,
+    "show-passive-items": true
   },
   "cpu": {
       "interval": 10,
