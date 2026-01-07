@@ -21,7 +21,7 @@ class KeybindWindow(Gtk.Window):
         
         # Header
         header = Gtk.Label()
-        header.set_markup("<big><b>🎹 Hyprland Keybinds</b></big>")
+        header.set_markup("<big><b>Hyprland Keybinds</b></big>")
         header.set_margin_top(10)
         header.set_margin_bottom(10)
         main_box.pack_start(header, False, False, 0)
@@ -33,7 +33,7 @@ class KeybindWindow(Gtk.Window):
         
         # Define sections with their keybinds
         sections = {
-            "🪟 Window Management": [
+            "   Window Management": [
                 ("Super + Q", "Close Active Window"),
                 ("Super + F", "Toggle Fullscreen"),
                 ("Super + Alt + Space", "Toggle Floating"),
@@ -45,31 +45,34 @@ class KeybindWindow(Gtk.Window):
                 ("Super + down", "Move Focus Down"),
             ],
             
-            "🚀 Applications": [
+            "   Applications": [
                 ("Super + T", "Open Terminal"),
                 ("Super + E", "Open File Manager"),
                 ("Super + Tab", "Open App Launcher"),
+                ("Super + Y", "Open hyprlauncher"),
                 ("Super + W", "Open Zen Browser"),
                 ("Super + M", "Open Music Player"),
                 ("Super + End", "Open System Monitor (btop)"),
             ],
             
-            "📸 Media & Screenshots": [
+            "   Media & Screenshots": [
                 ("Print", "Screenshot Window"),
                 ("Super + Shift + S", "Screenshot Region"),
             ],
             
-            "⚙️ OS & System": [
+            "   OS & System": [
                 ("Super + L", "Lock Screen"),
                 ("Ctrl + Alt + Delete", "Logout Menu"),
                 ("Super + I", "System Information"),
                 ("Super + R", "Restart Waybar"),
                 ("Super + N", "Toggle Notifications"),
                 ("Super + H", "Open This Help Window"),
+                ("Super + B", "Open Change Background Window"),
+                ("Super + C", "Color Picker"),
                 ("Super + Space", "Change Language Layout"),
             ],
             
-            "🖥️ Workspaces": [
+            "󰨇   Workspaces": [
                 ("Super + 1", "Switch to Workspace 1"),
                 ("Super + 2", "Switch to Workspace 2"),
                 ("Super + 3", "Switch to Workspace 3"),
@@ -92,7 +95,7 @@ class KeybindWindow(Gtk.Window):
                 ("Super + Shift + 0", "Move Window to Workspace 10"),
             ],
             
-            "🔧 Special Workspaces": [
+            "󱄄   Special Workspaces": [
                 ("Super + S", "Toggle Special Workspace 'magic'"),
                 ("Super + Alt + S", "Move Window to Special Workspace"),
                 ("Super + mouse_down", "Next Workspace"),

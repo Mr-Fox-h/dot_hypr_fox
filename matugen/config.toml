@@ -8,7 +8,7 @@ command = "swww"
 # The arguments that will be provided to the command.
 # Keywords like {{ mode }} or anything that works inside of hooks doesn't work here.
 # The last argument will be the image path.
-arguments = ["img", "--transition-type", "center"]
+arguments = ["img", "--transition-fps", "60", "--transition-step", "250", "--transition-type", "any"]
 
 [templates.hyprland]
 input_path = '~/.config/matugen/templates/hyprland-colors.conf'
