@@ -112,6 +112,11 @@ class WallpaperSwitcher(Gtk.Window):
         close_button.connect("clicked", self.on_close_clicked)
         button_box.pack_end(close_button, False, False, 0)
         
+        # Theme_mode checkbox button
+        self.theme_checkbox = Gtk.CheckButton(label="Dark Mode")
+        self.theme_checkbox.set_active(True)  # default to dark mode
+        button_box.pack_start(self.theme_checkbox, False, False, 0)
+
         # Connect selection changed
         self.flowbox.connect("selected-children-changed", self.on_selection_changed)
         
@@ -268,12 +273,12 @@ class WallpaperSwitcher(Gtk.Window):
         # Run matugen in background
         self.run_matugen(img_path)
     
-    def run_matugen(self, img_path):
+    def run_matugen(self, img_path, theme_mode):
         """Execute matugen command asynchronously"""
         def run_command():
             try:
                 subprocess.run(
-                    ["matugen", "image", str(img_path), "--source-color-index", "0"],
+                    ["matugen", "image", str(img_path), "-m", theme_mode, "--source-color-index", "0"],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
                     check=True
@@ -289,6 +294,7 @@ class WallpaperSwitcher(Gtk.Window):
         thread.daemon = True
         thread.start()
     
+
     def on_success(self, filename):
         self.status_label.set_text(f"Applied: {filename}")
         # ✅ EXIT IMMEDIATELY AFTER APPLYING
@@ -317,6 +323,22 @@ class WallpaperSwitcher(Gtk.Window):
     
     def on_close_clicked(self, button):
         self.destroy()
+
+    def on_apply_clicked(self, button):
+        if not self.loading_complete:
+            return
+        selected = self.flowbox.get_selected_children()
+        if not selected:
+            return
+
+        img_path = selected[0].img_path
+        theme_mode = "dark" if self.theme_checkbox.get_active() else "light"
+        self.status_label.set_text(f"Applying: {img_path.name} (mode: {theme_mode})...")
+        self.apply_button.set_sensitive(False)
+        
+        self.run_matugen(img_path, theme_mode)
+
+
 
 if __name__ == "__main__":
     app = WallpaperSwitcher()
