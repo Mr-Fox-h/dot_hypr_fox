@@ -52,6 +52,7 @@ class KeybindWindow(Gtk.Window):
                 ("Super + Y", "Open hyprlauncher"),
                 ("Super + W", "Open Zen Browser"),
                 ("Super + M", "Open Music Player"),
+                ("Super + V", "Open Hiddify VPN"),
                 ("Super + End", "Open System Monitor (btop)"),
             ],
             

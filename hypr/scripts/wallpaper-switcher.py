@@ -204,7 +204,7 @@ class WallpaperSwitcher(Gtk.Window):
         def run_command():
             try:
                 subprocess.run(
-                    ["matugen", "image", str(img_path)],
+                    ["matugen", "image", str(img_path), "--source-color-index", "0"],
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.DEVNULL,
                     check=True
