@@ -72,7 +72,7 @@ textbox-prompt-colon {
     expand:                      false;
     padding:                     8px 11px;
     border-radius:               100%;
-    background-color:            white;
+    background-color:            @primary;
     text-color:                  black;
     str:                         "󰍉";
 }
@@ -81,7 +81,7 @@ entry {
     padding:                     8px 12px;
     border:                      0px;
     background-color:            transparent;
-    text-color:                  white;
+    text-color:                  @primary;
     cursor:                      text;
     placeholder:                 "Search...";
     placeholder-color:           inherit;
@@ -125,12 +125,12 @@ element normal.active {
     text-color:                  @active;
 }
 element selected.normal {
-    background-image:            linear-gradient(to right, #4C4F52, #2E343B);
-    text-color:                  @selected;
+    background-color:            @on-primary-fixed;
+    text-color:                  @primary-fixed;
 }
 element selected.active {
-    background-image:            linear-gradient(to right, #4C4F52, #2E343B);
-    text-color:                  @selected;
+    background-image:            @primary-fixed;
+    text-color:                  @primary-fixed;
 }
 element-icon {
     background-color:            transparent;
@@ -162,7 +162,7 @@ button {
 }
 button selected {
     background-color:            inherit;
-    text-color:                  @secondary-fixed;
+    text-color:                  @tertiary;
 }
 
 /*****----- Message -----*****/

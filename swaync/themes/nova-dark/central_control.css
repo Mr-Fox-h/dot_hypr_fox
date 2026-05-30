@@ -5,16 +5,14 @@
 @define-color urgent          @on_error;
 
 * {
-  color:            @text;
-
   all: unset;
   font-size: 14px;
   font-family: "JetBrains Mono Nerd Font 10";
   transition: 200ms;
-
+  color: @text; /* base text color */
 }
 
-/* Avoid 'annoying' backgroud */
+/* Avoid annoying background */
 .blank-window {  
   background: transparent;  
 }
@@ -24,8 +22,6 @@
 .control-center {
   background: @background;
   border-radius: 24px;
-  /* border: none; */
-  /* box-shadow: 0 0 10px 0 rgba(0,0,0,.6); */
   margin: 18px;
   padding: 12px;
 }
@@ -33,11 +29,12 @@
 /* Notifications  */
 .control-center .notification-row .notification-background,
 .control-center .notification-row .notification-background .notification.critical {
-  background-color: @on_secondary_fixed;
+  background-color: @surface;  /* was @on_secondary_fixed - use @surface for reliable contrast */
   box-shadow: 0 3px 0 0 rgba(0,0,0,.3);
   border-radius: 16px;
   margin: 4px 0px;
   padding: 4px;
+  color: @text; /* explicit text color */
 }
 
 .control-center .notification-row .notification-background .notification.critical {
@@ -55,7 +52,7 @@
 
 .control-center .notification-row .notification-background .notification > *:last-child > * .notification-action {
   background: @selected;
-  color: @text;
+  color: @text; /* explicit */
   border-radius: 12px;
   margin: 6px;
 }
@@ -69,7 +66,6 @@
 }
 
 /* Buttons */
-
 .control-center .notification-row .notification-background .close-button {
   background: transparent;
   border-radius: 6px;
@@ -97,10 +93,8 @@ progressbar {
 }
 
 /* Notifications expanded-group */
-
 .notification-group {
   margin: 2px 8px 2px 8px;
-
 }
 .notification-group-headers {
   font-weight: bold;
@@ -129,7 +123,7 @@ progressbar {
 
 /* WIDGETS --------------------------------------------------------------------------- */
 
-  /* Notification clear button */
+/* Notification clear button */
 .widget-title {
   font-size: 1.2em;
   margin: 6px;
@@ -139,6 +133,7 @@ progressbar {
   background: @background-alt;
   border-radius: 6px;
   padding: 4px 16px;
+  color: @text; /* explicit */
 }
 
 .widget-title button:hover {
@@ -149,7 +144,7 @@ progressbar {
   background-color: @selected;
 }
 
-  /* Do not disturb */
+/* Do not disturb */
 .widget-dnd {
   margin: 6px;
   font-size: 1.2rem;
@@ -161,6 +156,7 @@ progressbar {
   border-radius: 8px;
   box-shadow: none;
   padding: 2px;
+  color: @text; /* explicit */
 }
 
 .widget-dnd > switch:hover {
@@ -180,42 +176,43 @@ progressbar {
   border-radius: 6px;
 }
 
-  /* Buttons menu */
+/* Buttons menu */
 .widget-buttons-grid {
   font-size: x-large;
   padding: 6px 2px;
   margin: 6px;
   border-radius: 12px;
   background: @inverse_on_surface;
+  /* Contrast fix: if @inverse_on_surface is dark, use light text; if light, use dark text.
+     Using @background (opposite of main background) usually works. */
+  color: @background;
 }
 
-.widget-buttons-grid>flowbox>flowboxchild>button {
+.widget-buttons-grid > flowbox > flowboxchild > button {
   margin: 4px 10px;
   padding: 6px 12px;
   background: transparent;
   border-radius: 8px;
+  color: @background; /* inherit from parent */
 }
 
-.widget-buttons-grid>flowbox>flowboxchild>button:hover {
+.widget-buttons-grid > flowbox > flowboxchild > button:hover {
   background: @hover;
 }
 
-
-  /* Music player */
+/* Music player */
 .widget-mpris {
-    background: @red;
-    border-radius: 16px;
-    color: @text;
-    margin:  20px 6px;
+  background: @red;
+  border-radius: 16px;
+  margin: 20px 6px;
 }
 
-  /* NOTE: Background need *opacity 1* otherwise will turn into the album art blurred  */
 .widget-mpris-player {
-    background-color: @inverse_on_surface;
-    /* background-color: @background-sec; */
-    border-radius: 22px;
-    padding: 6px 14px;
-    margin: 6px;
+  background-color: @inverse_on_surface;
+  color: @background; /* force contrast with background color */
+  border-radius: 22px;
+  padding: 6px 14px;
+  margin: 6px;
 }
 
 .widget-mpris > box > button {
@@ -248,7 +245,7 @@ progressbar {
 /* Volume */
 .widget-volume {
   background: @background-alt;
-  color: @background;
+  color: @background; /* was @background - make sure text contrasts */
   padding: 4px;
   margin: 6px;
   border-radius: 6px;

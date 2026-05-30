@@ -8,12 +8,12 @@
 }
 
 tooltip {
-  background: @background;
-  border: 1px solid @outline_variant;
+    background: @surface_container;      /* More consistent background */
+    border: 1px solid @outline_variant;
 }
 
 tooltip label {
-  color: @on_surface;
+    color: @on_surface;
 }
 
 window#waybar {
@@ -40,16 +40,19 @@ button {
     padding: 0 4px;
     margin: 4px;
     border-radius: 50px;
-    animation: gradient_f 20s ease-in infinite;
     transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
 }
 
 #workspaces {
-    background: @background;
+    background: @surface_container_low;  /* Use surface container for better contrast */
     border-radius: 20px;
     margin-top: 8px;
     margin-bottom: 8px;
-    padding: 0 4px 0 4px;
+    padding: 0 4px;
+}
+
+#workspaces button {
+    color: @on_surface;                 /* Ensure text is visible */
 }
 
 #workspaces button:hover {
@@ -58,19 +61,17 @@ button {
 
 #workspaces button.focused {
     background: transparent;
-    color: @surface_container_highest;
+    color: @primary;                    /* Use primary color for focus */
 }
 
 #workspaces button.active {
-    background: alpha(@on_surface, 0.5);
-    color: lighter(@surface_container_highest);
+    background: alpha(@primary, 0.6);   /* Use primary with transparency */
+    color: @on_primary;
     border-radius: 20px;
-    transition: color 0.3s;
     margin-left: 3px;
     padding-left: 15px;
     padding-right: 15px;
     margin-right: 3px;
-    animation: gradient_f 20s ease-in infinite;
     transition: all 0.5s cubic-bezier(0.55, -0.68, 0.48, 1.682);
 }
 
@@ -79,6 +80,7 @@ button {
     background: transparent;
 }
 
+/* Common style for all modules */
 #pulseaudio,
 #clock,
 #battery,
@@ -93,87 +95,70 @@ button {
 #network,
 #mode,
 #privacy,
-#scratchpad {
-  background: @on_primary_fixed;
-  color: @on_surface;
-  margin: 8px 8px 8px 0;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 50px;
-}
-
-#language {
-  background: @secondary_fixed;
-  color: @source_color;
-  margin: 8px 8px 8px 0;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 50px;
+#scratchpad,
+#language,
+#custom-app,
+#custom-notifications {
+    background: @surface_container;      /* Unified background */
+    color: @on_surface;                 /* Unified text color */
+    margin: 8px 8px 8px 0;
+    padding-left: 15px;
+    padding-right: 15px;
+    border-radius: 50px;
 }
 
 #custom-app {
-  background: @surface_dim;
-  color: @on_background;
-  margin: 8px;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 50px;
-  transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+  margin-left: 12px
+}
+
+/* Special cases with color accents */
+#language {
+    color: @primary;                    /* Accent color */
 }
 
 #custom-app:hover {
-  color: @tertiary_fixed;
-}
-
-#custom-notifications {
-  background: @on_primary_fixed;
-  color: @tertiary;
-  margin: 8px 8px 8px 0;
-  padding-left: 15px;
-  padding-right: 15px;
-  border-radius: 50px;
-  transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+    color: @primary;                    /* Hover effect */
 }
 
 #custom-notifications:hover {
-  color: @tertiary_fixed;
+    color: @primary;
 }
 
 #clock {
-    color: @on_error_container;
+    color: @on_surface;                 /* Remove hardcoded @on_error_container */
 }
 
 #clock.date {
-    color: @on_error_container;
+    color: @on_surface;
 }
 
 #pulseaudio {
-  color: @on_primary_container;
-  transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+    color: @on_surface;
 }
 
 #pulseaudio:hover {
-  color: @tertiary_fixed;
+    color: @primary;
 }
 
-#bluetooth.disable {
-  color: @error;
-}
-
-#bluetooth.off, #bluetooth.disabled {
-  color: @error;
+/* Bluetooth states */
+#bluetooth.disable,
+#bluetooth.off,
+#bluetooth.disabled {
+    color: @error;
 }
 
 #bluetooth.on {
-  color: @error_container;
+    color: @primary;
 }
 
 #bluetooth.connected {
-  color: @secondary;
+    color: @secondary;
 }
 
-#network.disabled, #network.disconnected {
-  color: @error;
+/* Network states */
+#network.disabled,
+#network.disconnected {
+    color: @error;
 }
 
 #network {
@@ -181,7 +166,11 @@ button {
 }
 
 #network.ethernet {
-  color: @error;
+    color: @error;
+}
+
+#battery {
+    color: @secondary;
 }
 
 #idle_inhibitor {
@@ -193,17 +182,12 @@ button {
     color: @error;
 }
 
-#battery {
-    color: @secondary;
-}
-
-/* If workspaces is the leftmost module, omit left margin */
-.modules-left>widget:first-child>#workspaces {
+/* Remove left margin from first module */
+.modules-left > widget:first-child > #workspaces {
     margin-left: 0;
 }
 
-/* If workspaces is the rightmost module, omit right margin */
-.modules-right>widget:last-child>#workspaces {
+.modules-right > widget:last-child > #workspaces {
     margin-right: 0;
 }
 
