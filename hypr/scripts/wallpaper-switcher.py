@@ -31,6 +31,7 @@ class WallpaperSwitcher(Gtk.Window):
         
         # Store all image paths and widgets
         self.image_widgets = []  # List of (img_path, flowbox_child)
+        self.loading_complete = False
         
         # Create main container with margin
         main_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
@@ -53,11 +54,14 @@ class WallpaperSwitcher(Gtk.Window):
         
         main_box.pack_start(search_box, False, False, 0)
         
+        # === Overlay for loading indicator ===
+        self.overlay = Gtk.Overlay()
+        main_box.pack_start(self.overlay, True, True, 0)
+        
         # Scrolled window for images
         scrolled = Gtk.ScrolledWindow()
         scrolled.set_policy(Gtk.PolicyType.AUTOMATIC, Gtk.PolicyType.AUTOMATIC)
-        scrolled.set_vexpand(True)
-        main_box.pack_start(scrolled, True, True, 0)
+        self.overlay.add(scrolled)
         
         # FlowBox for images
         self.flowbox = Gtk.FlowBox()
@@ -65,6 +69,25 @@ class WallpaperSwitcher(Gtk.Window):
         self.flowbox.set_max_children_per_line(10)
         self.flowbox.set_selection_mode(Gtk.SelectionMode.SINGLE)
         scrolled.add(self.flowbox)
+        
+        # Loading overlay box (centered)
+        self.loading_box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=10)
+        self.loading_box.set_halign(Gtk.Align.CENTER)
+        self.loading_box.set_valign(Gtk.Align.CENTER)
+        
+        self.spinner = Gtk.Spinner()
+        self.spinner.start()
+        self.loading_box.pack_start(self.spinner, False, False, 0)
+        
+        self.progress_bar = Gtk.ProgressBar()
+        self.progress_bar.set_size_request(300, -1)
+        self.loading_box.pack_start(self.progress_bar, False, False, 0)
+        
+        self.loading_label = Gtk.Label(label="Scanning for images...")
+        self.loading_box.pack_start(self.loading_label, False, False, 0)
+        
+        # Add loading overlay on top
+        self.overlay.add_overlay(self.loading_box)
         
         # Status bar
         self.status_label = Gtk.Label()
@@ -89,50 +112,91 @@ class WallpaperSwitcher(Gtk.Window):
         close_button.connect("clicked", self.on_close_clicked)
         button_box.pack_end(close_button, False, False, 0)
         
-        # Load images
-        self.load_images()
-        
         # Connect selection changed
         self.flowbox.connect("selected-children-changed", self.on_selection_changed)
         
         # Handle window close
         self.connect("destroy", Gtk.main_quit)
         self.connect("key-press-event", self.on_key_press)
+        
+        # Start asynchronous loading
+        self.load_images_async()
     
-    def load_images(self):
-        """Recursively load all images from ~/Pictures and subdirectories"""
-        supported_formats = {'.png', '.jpg', '.jpeg', '.webp', '.svg', '.bmp', '.tiff', '.gif'}
-        image_files = []
+    def load_images_async(self):
+        """Start background thread to scan images, then load thumbnails in batches"""
+        def scan_images():
+            supported_formats = {'.png', '.jpg', '.jpeg', '.webp', '.svg', '.bmp', '.tiff', '.gif'}
+            image_files = []
+            try:
+                for root, dirs, files in os.walk(str(self.pictures_dir)):
+                    # Skip hidden directories
+                    dirs[:] = [d for d in dirs if not d.startswith('.')]
+                    for file in files:
+                        if Path(file).suffix.lower() in supported_formats:
+                            img_path = Path(root) / file
+                            image_files.append(img_path)
+            except Exception as e:
+                GLib.idle_add(self.show_error_dialog, f"Error scanning directory: {e}")
+                return
+            
+            image_files.sort()
+            GLib.idle_add(self.start_thumbnail_loading, image_files)
         
-        try:
-            for root, dirs, files in os.walk(str(self.pictures_dir)):
-                # Skip hidden directories
-                dirs[:] = [d for d in dirs if not d.startswith('.')]
-                for file in files:
-                    if Path(file).suffix.lower() in supported_formats:
-                        img_path = Path(root) / file
-                        image_files.append(img_path)
-        except Exception as e:
-            self.show_error_dialog(f"Error scanning directory: {e}")
-            return
-        
+        from threading import Thread
+        thread = Thread(target=scan_images)
+        thread.daemon = True
+        thread.start()
+    
+    def start_thumbnail_loading(self, image_files):
+        """Initialize progress bar and start adding thumbnails in chunks"""
         if not image_files:
+            self.loading_box.destroy()
             self.status_label.set_text("No images found in ~/Pictures or its subfolders")
+            self.loading_complete = True
             return
         
-        image_files.sort()
-        self.image_widgets.clear()
-        self.flowbox.foreach(lambda child: self.flowbox.remove(child))
+        self.total_images = len(image_files)
+        self.loaded_count = 0
+        self.progress_bar.set_fraction(0.0)
+        self.loading_label.set_text(f"Loading {self.total_images} thumbnails...")
         
-        for img_path in image_files:
+        # Start adding thumbnails in chunks
+        self.image_files_iter = iter(image_files)
+        self.add_thumbnail_chunk()
+    
+    def add_thumbnail_chunk(self, chunk_size=5):
+        """Add a chunk of thumbnails, then schedule next chunk via idle"""
+        added = 0
+        for _ in range(chunk_size):
+            try:
+                img_path = next(self.image_files_iter)
+            except StopIteration:
+                # Done loading all thumbnails
+                self.loading_complete = True
+                self.loading_box.destroy()
+                self.status_label.set_text(f"Loaded {self.total_images} images")
+                return
+            
+            # Create widget in main thread (GdkPixbuf must be in main thread)
             child = self.create_image_widget(img_path)
             self.image_widgets.append((img_path, child))
             self.flowbox.add(child)
+            self.loaded_count += 1
+            
+            # Update progress
+            fraction = self.loaded_count / self.total_images
+            self.progress_bar.set_fraction(fraction)
+            self.loading_label.set_text(f"Loading thumbnails... {self.loaded_count}/{self.total_images}")
+            added += 1
         
-        self.status_label.set_text(f"Loaded {len(image_files)} images")
+        if added > 0:
+            # Show the new widgets immediately
+            self.flowbox.show_all()
+            # Schedule next chunk
+            GLib.idle_add(self.add_thumbnail_chunk, chunk_size)
     
     def create_image_widget(self, img_path):
-        """Create a FlowBoxChild with thumbnail and filename"""
+        """Create a FlowBoxChild with thumbnail and filename (must be called in main thread)"""
         vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
         
         try:
@@ -161,7 +225,10 @@ class WallpaperSwitcher(Gtk.Window):
         return child
     
     def on_search_changed(self, entry):
-        """Filter images based on search query"""
+        """Filter images based on search query (only after loading complete)"""
+        if not self.loading_complete:
+            return  # Wait until loading finished
+        
         query = entry.get_text().strip().lower()
         visible_count = 0
         
@@ -188,6 +255,8 @@ class WallpaperSwitcher(Gtk.Window):
         self.apply_button.set_sensitive(len(selected) > 0)
     
     def on_apply_clicked(self, button):
+        if not self.loading_complete:
+            return
         selected = self.flowbox.get_selected_children()
         if not selected:
             return
