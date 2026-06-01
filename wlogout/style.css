@@ -8,13 +8,14 @@
 window {
     font-family: Fira Code Medium;
     font-size: 16pt;
-    color:  @on_background; /* text */
+    color: transparent; /* text */
     /* background-color: @background; */
     background-color: rgba(0, 0, 0, 0.85);
 } 
 
 button {
     outline: none;
+    color: #ffffff; /* text */
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20%;
