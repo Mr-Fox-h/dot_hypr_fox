@@ -1,0 +1,51 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/master/doc/json_schema.json",
+  "logo": {
+    "type": "kitty",
+    "source": "~/.config/fastfetch/M3DF.png",
+    "width": 45,
+    "height": 15,
+    "padding": {
+      "top": 2,
+      "right": 4
+    }
+  },
+  "display": {
+    "separator": "  󰚌  ",
+    "color": {
+      "keys": "cyan",
+      "values": "yellow",
+      "title": "magenta"
+    },
+    "brightColor": true
+  },
+  "modules": [
+    {
+      "type": "title",
+      "color": "magenta"
+    },
+    {
+      "type": "separator",
+      "string": " "
+    },
+    { "type": "os", "key": "{#white}󱓼 {#blue}󰌢  OS\t" },
+    { "type": "kernel", "key": "{#white}┃ {#blue}  Kernel\t" },
+    { "type": "uptime", "key": "{#white}┃ {#green}  Uptime\t" },
+    { "type": "packages", "key": "{#white}┃ {#green}  Packages\t" },
+    { "type": "shell", "key": "{#white}┃ {#green}  Shell\t" },
+    { "type": "terminal", "key": "{#white}┃ {#green}  Terminal\t" },
+    { "type": "display", "key": "{#white}┃ {#magenta}󰍹  Display\t" },
+    { "type": "de", "key": "{#white}┃ {#magenta}  DE\t" },
+    { "type": "wm", "key": "{#white}┃ {#magenta}  WM\t" },
+    { "type": "theme", "key": "{#white}┃ {#yellow}  Theme\t" },
+    { "type": "icons", "key": "{#white}┃ {#yellow}  Icons\t" },
+    { "type": "font", "key": "{#white}┃ {#yellow}  Font\t" },
+    { "type": "terminalfont", "key": "{#white}┃ {#yellow}  Term Font\t" },
+    { "type": "locale", "key": "{#white}󱓼 {#cyan}  Locale\t" },
+    {
+      "type": "separator",
+      "string": " "
+    },
+    { "type": "colors", "symbol": "circle" }
+  ]
+}
