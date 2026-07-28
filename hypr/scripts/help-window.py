@@ -43,6 +43,10 @@ class KeybindWindow(Gtk.Window):
                 ("Super + right", "Move Focus Right"),
                 ("Super + up", "Move Focus Up"),
                 ("Super + down", "Move Focus Down"),
+                ("Super + Shift + left", "Move Window Left"),
+                ("Super + Shift + right", "Move Window Right"),
+                ("Super + Shift + up", "Move Window Up"),
+                ("Super + Shift + down", "Move Window Down"),
             ],
             
             "   Applications": [
@@ -65,7 +69,7 @@ class KeybindWindow(Gtk.Window):
                 ("Super + L", "Lock Screen"),
                 ("Ctrl + Alt + Delete", "Logout Menu"),
                 ("Super + I", "System Information"),
-                ("Super + R", "Restart Waybar"),
+                ("Super + R", "hyprland-run"),
                 ("Super + N", "Toggle Notifications"),
                 ("Super + H", "Open This Help Window"),
                 ("Super + B", "Open Change Background Window"),
@@ -99,6 +103,7 @@ class KeybindWindow(Gtk.Window):
             "󱄄   Special Workspaces": [
                 ("Super + S", "Toggle Special Workspace 'magic'"),
                 ("Super + Alt + S", "Move Window to Special Workspace"),
+                ("Super + X", "Minimize Window"),
                 ("Super + mouse_down", "Next Workspace"),
                 ("Super + mouse_up", "Previous Workspace"),
             ],
