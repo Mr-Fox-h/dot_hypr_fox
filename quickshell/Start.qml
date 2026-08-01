@@ -22,12 +22,12 @@ Scope {
 
         Process {
             id: powerFunc
-            command: ["systemctl poweroff"]
+            command: ["sh", "-c", "systemctl poweroff"]
         }
 
         Process {
             id: logoutFunc
-            command: ["loginctl kill-session $XDG_SESSION_ID"]
+            command: ["sh", "-c", "loginctl kill-session $XDG_SESSION_ID"]
         }
 
         Process {
@@ -37,17 +37,17 @@ Scope {
 
         Process {
             id: rebootFunc
-            command: ["systemctl reboot"]
+            command: ["systemctl", "reboot"]
         }
 
         Process {
             id: hibernateFunc
-            command: ["hyprlock && systemctl hibernate"]
+            command: ["sh", "-c", "hyprlock && systemctl hibernate"]
         }
 
         Process {
             id: suspendFunc
-            command: ["hyprlock && systemctl suspend"]
+            command: ["sh", "-c", "systemctl suspend"]
         }
 
         anchors {
