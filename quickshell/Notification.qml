@@ -119,8 +119,6 @@ Scope {
                             Text {
                                 Layout.fillWidth: true
                                 text: card.modelData.summary
-                                // color: Colors.md3.primary
-
                                 color: modelData.urgency === NotificationUrgency.Critical ? Colors.md3.error : Colors.md3.primary
                                 elide: Text.ElideRight
 

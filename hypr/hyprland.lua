@@ -31,7 +31,7 @@ local terminal     = "kitty"
 local fileManager  = "nautilus"
 local menu         = "hyprlauncher"
 local notification = "qs ipc call notification toggle"
-local help         = "python3 ~/.config/hypr/scripts/help-window.py"
+local help         = "qs ipc call help toggle"
 local bgChanger    = "python3 ~/.config/hypr/scripts/wallpaper-switcher.py"
 local sysMonitor   = "kitty -1 fish -c \"btop\""
 local logout       = "qs ipc call start toggle"
@@ -399,6 +399,12 @@ hl.window_rule({
 --     no_anim = true,
 -- })
 -- overlayLayerRule:set_enabled(false)
+
+hl.window_rule({
+  name  = "float-help-window",
+  match = { title = "Help" },
+  float = true,
+})
 
 -- Hyprland-run windowrule
 hl.window_rule({

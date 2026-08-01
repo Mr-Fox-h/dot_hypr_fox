@@ -56,6 +56,7 @@ Variants {
             }
             Notification {}
             Start {}
+            HelpWindow {}
         }
     }
 }
