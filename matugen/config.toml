@@ -19,6 +19,10 @@ input_path = '~/.config/matugen/templates/hyprland-colors.lua'
 output_path = '~/.config/hypr/colors.lua'
 post_hook = 'hyprctl reload'
 
+[templates.quickshell]
+input_path = '~/.config/matugen/templates/quickshell.json'
+output_path = '~/.config/quickshell/colors.json'
+
 [templates.kitty]
 input_path = '~/.config/matugen/templates/kitty-colors.conf'
 output_path = '~/.config/kitty/colors.conf'
@@ -28,21 +32,20 @@ post_hook = 'kill -SIGUSR1 $(pgrep kitty)'
 input_path = '~/.config/matugen/templates/rofi-colors.rasi'
 output_path = '~/.config/rofi/colors.rasi'
 
-[templates.waybar]
-input_path = '~/.config/matugen/templates/colors.css'
-output_path = '~/.config/waybar/colors.css'
-post_hook = 'pkill waybar; waybar & disown'
+# [templates.waybar]
+# input_path = '~/.config/matugen/templates/colors.css'
+# output_path = '~/.config/waybar/colors.css'
+# post_hook = 'pkill waybar; waybar & disown'
 
 [templates.btop]
 input_path = '~/.config/matugen/templates/btop.theme'
 output_path = '~/.config/btop/themes/colors.theme'
 post_hook = 'kill -SIGUSR1 $(pgrep btop)'
 
-[templates.swaync]
-input_path = '~/.config/matugen/templates/colors.css'
-output_path = '~/.config/swaync/colors.css'
-post_hook = 'kill -SIGUSR1 $(pgrep swaync); swaync & disown'
-
+# [templates.swaync]
+# input_path = '~/.config/matugen/templates/colors.css'
+# output_path = '~/.config/swaync/colors.css'
+# post_hook = 'kill -SIGUSR1 $(pgrep swaync); swaync & disown'
 
 [templates.wlogout]
 input_path = '~/.config/matugen/templates/colors.css'

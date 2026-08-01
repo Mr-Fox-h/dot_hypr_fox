@@ -27,19 +27,18 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal    = "kitty"
-local fileManager = "nautilus"
-local menu        = "hyprlauncher"
-local myMenu      = "pkill rofi || .config/rofi/launchers/type-5/launcher.sh"
-local notiv       = "swaync-client -t"
-local help        = "python3 ~/.config/hypr/scripts/help-window.py"
-local bgChanger   = "python3 ~/.config/hypr/scripts/wallpaper-switcher.py"
-local sysMonitor  = "kitty -1 fish -c \"btop\""
-local logout      = "wlogout"
-local lockScreen  = "hyprlock"
-local browser     = "zen-browser"
-local music       = "amberol"
-local vpn         = "./SOF/VPN/Hiddify-Linux-x64.AppImage"
+local terminal     = "kitty"
+local fileManager  = "nautilus"
+local menu         = "hyprlauncher"
+local notification = "qs ipc call notification toggle"
+local help         = "python3 ~/.config/hypr/scripts/help-window.py"
+local bgChanger    = "python3 ~/.config/hypr/scripts/wallpaper-switcher.py"
+local sysMonitor   = "kitty -1 fish -c \"btop\""
+local logout       = "wlogout"
+local lockScreen   = "hyprlock"
+local browser      = "zen-browser"
+local music        = "amberol"
+local vpn          = "./SOF/VPN/Hiddify-Linux-x64.AppImage"
 
 
 -------------------
@@ -53,8 +52,7 @@ local vpn         = "./SOF/VPN/Hiddify-Linux-x64.AppImage"
 --
 hl.on("hyprland.start", function()
   hl.exec_cmd("awww-daemon & disown")
-  hl.exec_cmd("waybar")
-  hl.exec_cmd("swaync")
+  hl.exec_cmd("qs -p $HOME/.config/quickshell")
   hl.exec_cmd("hyprlauncher -d")
   hl.exec_cmd("fcitx5")
   hl.exec_cmd("systemctl --user start hyprpolkitagent")
@@ -284,12 +282,11 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. "+ ALT" .. " + Space", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd(menu))
-hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(myMenu))
+hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprland-run"))
-hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(notiv))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd(notification))
 hl.bind("PRINT", hl.dsp.exec_cmd("hyprshot -m window --raw | satty --filename -"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region --raw | satty --filename -"))
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("hyprpicker -a"))

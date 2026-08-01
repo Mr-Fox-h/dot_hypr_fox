@@ -1,0 +1,10 @@
+{
+  "workspace": {
+    "library": [
+      "/home/mr-fox/.config/hypr"
+    ]
+  },
+  "diagnostics": {
+    "globals": ["hl"]
+  }
+}
