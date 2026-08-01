@@ -57,6 +57,7 @@ Variants {
             Notification {}
             Start {}
             HelpWindow {}
+            Wallpaper {}
         }
     }
 }
