@@ -1,5 +1,5 @@
 return {
-    image = "/home/mr-fox/Pictures/BG/My art/headshot_black.jpg",
+    image = "/home/mr-fox/Pictures/BG/My art/face_hd.jpg",
 
     background = "0xff111318",
 

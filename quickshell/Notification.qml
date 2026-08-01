@@ -1,4 +1,5 @@
 import Quickshell
+import QtMultimedia
 import Qt5Compat.GraphicalEffects
 import Quickshell.Wayland
 import Quickshell.Services.Notifications
@@ -18,6 +19,11 @@ Scope {
         id: history
     }
 
+    SoundEffect {
+        id: blingSound
+        source: "assets/bling.wav"
+    }
+
     NotificationServer {
         id: server
         bodySupported: true
@@ -33,6 +39,7 @@ Scope {
                 time: Qt.formatDateTime(new Date(), "HH:MM")  // fixed typo: Data → Date
             });
             n.tracked = true;
+            blingSound.play();
         }
     }
 
@@ -64,7 +71,6 @@ Scope {
         implicitWidth: 380
         implicitHeight: Math.max(1, column.implicitHeight)
         color: "transparent"
-
         exclusionMode: ExclusionMode.Ignore
 
         ColumnLayout {
@@ -85,16 +91,16 @@ Scope {
                     }
 
                     Layout.fillWidth: true
-                    Layout.preferredHeight: layout.implicitHeight + 20
-                    radius: 10
-                    color: Colors.md3.background
+                    Layout.preferredHeight: layout.implicitHeight + 40
+                    radius: 15
+                    color: Colors.md3.surface_container
                     border.width: 1
                     border.color: modelData.urgency === NotificationUrgency.Critical ? Colors.md3.on_error : Colors.md3.surface_container_high
 
                     RowLayout {
                         id: layout
                         anchors.fill: parent
-                        anchors.margins: 10
+                        anchors.margins: 20
                         spacing: 10
 
                         Image {
@@ -113,7 +119,9 @@ Scope {
                             Text {
                                 Layout.fillWidth: true
                                 text: card.modelData.summary
-                                color: Colors.md3.primary
+                                // color: Colors.md3.primary
+
+                                color: modelData.urgency === NotificationUrgency.Critical ? Colors.md3.error : Colors.md3.primary
                                 elide: Text.ElideRight
 
                                 font {
@@ -166,7 +174,7 @@ Scope {
 
         Rectangle {
             anchors.fill: parent
-            radius: 10
+            radius: 15
             color: Colors.md3.surface_container
             border.width: 1
             border.color: Colors.md3.surface_container_high
@@ -206,7 +214,7 @@ Scope {
                             width: 80
                             height: 80
                             color: Colors.md3.outline
-                            radius: 10
+                            radius: 5
                             clip: true
 
                             property string artUrl: audioText.activePlayer ? audioText.activePlayer.trackArtUrl : ""
@@ -268,17 +276,97 @@ Scope {
                                     bold: true
                                 }
                             }
+
+                            RowLayout {
+                                Layout.fillWidth: true
+                                spacing: 25
+
+                                Text {
+                                    text: "󰒫"
+                                    color: backMouse.containsMouse ? Colors.md3.outline : Colors.md3.on_surface_variant
+                                    font {
+                                        family: Config.bar.fontFamily
+                                        pixelSize: Config.bar.fontSize + 10
+                                        bold: true
+                                    }
+
+                                    Behavior on color {
+                                        ColorAnimation {
+                                            duration: 150
+                                        }
+                                    }
+
+                                    MouseArea {
+                                        id: backMouse
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+                                        hoverEnabled: true
+                                        onClicked: {
+                                            if (audioText.activePlayer) {
+                                                audioText.activePlayer.previous();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Text {
+                                    text: "󰐊" //󰏤
+                                    color: playMouse.containsMouse ? Colors.md3.outline : Colors.md3.on_surface_variant
+                                    font {
+                                        family: Config.bar.fontFamily
+                                        pixelSize: Config.bar.fontSize + 10
+                                        bold: true
+                                    }
+
+                                    Behavior on color {
+                                        ColorAnimation {
+                                            duration: 150
+                                        }
+                                    }
+
+                                    MouseArea {
+                                        id: playMouse
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+                                        hoverEnabled: true
+                                        onClicked: {
+                                            if (audioText.activePlayer) {
+                                                audioText.activePlayer.togglePlaying();
+                                            }
+                                        }
+                                    }
+                                }
+
+                                Text {
+                                    text: "󰒬"
+                                    color: nextMouse.containsMouse ? Colors.md3.outline : Colors.md3.on_surface_variant
+                                    font {
+                                        family: Config.bar.fontFamily
+                                        pixelSize: Config.bar.fontSize + 10
+                                        bold: true
+                                    }
+
+                                    Behavior on color {
+                                        ColorAnimation {
+                                            duration: 150
+                                        }
+                                    }
+
+                                    MouseArea {
+                                        id: nextMouse
+                                        anchors.fill: parent
+                                        cursorShape: Qt.PointingHandCursor
+                                        hoverEnabled: true
+                                        onClicked: {
+                                            if (audioText.activePlayer) {
+                                                audioText.activePlayer.next();
+                                            }
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
-
-                    // MouseArea {
-                    //     anchors.fill: parent
-                    //     onClicked: {
-                    //         if (audioText.activePlayer) {
-                    //             audioText.activePlayer.togglePlaying();
-                    //         }
-                    //     }
-                    // }
                 }
 
                 // Notification Header
@@ -330,7 +418,7 @@ Scope {
 
                         width: historyListView.width
                         height: itemLayout.implicitHeight + 20
-                        radius: 8
+                        radius: 10
                         color: Colors.md3.surface_container_low
                         border.width: 1
                         border.color: Colors.md3.surface_container_high
@@ -346,7 +434,7 @@ Scope {
                                 Layout.preferredWidth: 36
                                 Layout.alignment: Qt.AlignTop
                                 fillMode: Image.PreserveAspectfit
-                                visible: false // since we don't store images yet
+                                visible: false
                                 source: ""
                             }
 
