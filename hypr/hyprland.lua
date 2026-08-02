@@ -14,13 +14,21 @@ local colors = require("colors")
 ------------------
 
 -- See https://wiki.hypr.land/Configuring/Basics/Monitors/
+-- Primary monitor (left)
 hl.monitor({
-  output   = "",
-  mode     = "preferred",
-  position = "auto",
-  scale    = "auto",
+  output   = "HDMI-A-1",
+  mode     = "1920x1080@75", -- or "preferred" if you prefer EDID
+  position = "0x0",
+  scale    = 1,
 })
 
+-- Secondary monitor (right)
+hl.monitor({
+  output   = "HDMI-A-2",
+  mode     = "1920x1080@60",
+  position = "1920x0", -- right of HDMI-A-1
+  scale    = 1,
+})
 
 ---------------------
 ---- MY PROGRAMS ----
