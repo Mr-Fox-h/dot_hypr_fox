@@ -22,7 +22,7 @@ Rectangle {
     // Define the process to run hyprlauncher
     Process {
         id: launcherProcess
-        command: ["hyprlauncher"]
+        command: ["sh", "-c", "qs ipc call launcher toggle"]
     }
 
     RowLayout {

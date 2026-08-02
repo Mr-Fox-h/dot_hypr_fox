@@ -58,6 +58,7 @@ Variants {
             Start {}
             HelpWindow {}
             Wallpaper {}
+            Launcher {}
         }
     }
 }

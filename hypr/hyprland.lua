@@ -30,6 +30,7 @@ hl.monitor({
 local terminal     = "kitty"
 local fileManager  = "nautilus"
 local menu         = "hyprlauncher"
+local myCustomMenu = "qs ipc call launcher toggle"
 local notification = "qs ipc call notification toggle"
 local help         = "qs ipc call help toggle"
 local bgChanger    = "qs ipc call wallpaper toggle"
@@ -282,7 +283,8 @@ local closeWindowBind = hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. "+ ALT" .. " + Space", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + F", hl.dsp.window.fullscreen())
-hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + ESCAPE", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + TAB", hl.dsp.exec_cmd(myCustomMenu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit")) -- dwindle only
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("hyprland-run"))

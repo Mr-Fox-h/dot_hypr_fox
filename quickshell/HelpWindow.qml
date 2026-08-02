@@ -129,7 +129,6 @@ FloatingWindow {
                                     anchors.rightMargin: 15
 
                                     Text {
-
                                         Layout.preferredWidth: 220
                                         Layout.minimumWidth: 220
                                         text: modelData.key
