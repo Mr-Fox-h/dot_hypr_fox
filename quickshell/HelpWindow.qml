@@ -282,7 +282,7 @@ FloatingWindow {
                     action: "Open App Launcher"
                 },
                 {
-                    key: "Super + Y",
+                    key: "Super + Esc",
                     action: "Open hyprlauncher"
                 },
                 {
