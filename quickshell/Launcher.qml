@@ -119,9 +119,32 @@ Scope {
                                     appList.currentIndex = 0;
                             }
 
-                            Keys.onReturnPressed: {
+                            // 1. Handle Enter key to launch and close
+                            Keys.onReturnPressed: event => {
                                 if (appList.count > 0 && appList.currentItem) {
                                     appList.currentItem.modelData.execute();
+                                    launcher.visible = false;
+                                }
+                                event.accepted = true; // Prevents newline in TextField
+                            }
+
+                            // 2. Handle Up Arrow (with wrap-around)
+                            Keys.onUpPressed: event => {
+                                if (appList.count > 0) {
+                                    let newIndex = appList.currentIndex > 0 ? appList.currentIndex - 1 : appList.count - 1;
+                                    appList.currentIndex = newIndex;
+                                    appList.positionViewAtIndex(newIndex, ListView.Contain); // Ensures the selected item is visible
+                                    event.accepted = true; // Prevents cursor movement in TextField
+                                }
+                            }
+
+                            // 3. Handle Down Arrow (with wrap-around)
+                            Keys.onDownPressed: event => {
+                                if (appList.count > 0) {
+                                    let newIndex = appList.currentIndex < appList.count - 1 ? appList.currentIndex + 1 : 0;
+                                    appList.currentIndex = newIndex;
+                                    appList.positionViewAtIndex(newIndex, ListView.Contain);
+                                    event.accepted = true;
                                 }
                             }
 
@@ -129,7 +152,6 @@ Scope {
                                 color: "transparent"
                             }
                         }
-
                         MouseArea {
                             id: clearButton
                             width: 24
