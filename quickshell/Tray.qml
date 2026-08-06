@@ -4,6 +4,7 @@ import QtQuick
 import QtQuick.Layouts
 import QtQuick.Controls
 
+import "config.js" as Config
 import "Colors.qml"
 
 Rectangle {
@@ -15,7 +16,7 @@ Rectangle {
     RowLayout {
         id: row
         anchors.centerIn: parent
-        spacing: 4
+        spacing: 5
 
         Repeater {
             model: SystemTray.items
@@ -53,10 +54,19 @@ Rectangle {
                         if (mouse.button === Qt.LeftButton) {
                             modelData.activate();
                         } else if (mouse.button === Qt.RightButton) {
-                            modelData.display(null, mouse.x, mouse.y);
+                            modelData.display(trayItem, mouse.x, mouse.y);
                         }
                     }
                 }
+            }
+        }
+
+        Text {
+            text: ""
+            color: Colors.md3.primary
+            font {
+                family: Config.bar.fontFamily
+                pixelSize: Config.bar.fontSize
             }
         }
     }
